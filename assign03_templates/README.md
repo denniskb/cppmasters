@@ -87,4 +87,7 @@ public:
 ### Hints
 - You will have to make more changes to your class than depicted above. Types of variables and method singatures will change, and comments should be updated accordingly to reflect the changed semantics.
 - You will have to update all uses of `memory_block` (inside your test code) since the class definition has changed.
-- Bonus points: Implement a simple "`dummy`" class that consists of nothing else than a single print statement inside its destructor. Store it inside our `memory_block` and verify for yourself that when `memory_block` goes out of scope, not only its destructor is invoked, but so is the destructor of every single `dummy` inside it. 
+- Bonus points: Implement a simple "`dummy`" class that consists of nothing else but a single print statement inside its copy constructor, copy assignment operator, and destructor. Store it inside our `memory_block` and convince yourself that
+    1. when `memory_block` is copied, all its `dummy` elements' copy constructors are invoked as well, and that
+    2. when `memory_block` goes out of scope, not only its destructor is invoked, but so is the destructor of every single `dummy` inside it. 
+- If you struggle with the previous bullet point, have a look at the commit *message* history of the reference implementation file (assign03.cpp) - do not peak at the code itself just yet!
