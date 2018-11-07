@@ -17,15 +17,11 @@ class memory_block
 {
 public:
 	/* Allocates a memory block of n elements */
-	explicit memory_block(std::size_t n) : _size(n)
-	{
-		_data = new T[n];
-	}
+	explicit memory_block(std::size_t n) : _size(n), _data(new T[n]) {}
 
 	/* Creates a (deep) copy of other */
-	memory_block(memory_block const & other) : _size(other.size())
+	memory_block(memory_block const & other) : _size(other.size()), _data(new T[other.size()])
 	{
-		_data = new char[other.size()];
 		std::copy(other.data(), other.data() + other.size(), _data);
 	}
 
@@ -36,15 +32,15 @@ public:
 	memory_block & operator=(memory_block const & rhs)
 	{
 		// Avoid self-assignment
-		if (this == & rhs)
-			return * this;
+		if (this != & rhs)
+		{
+			delete[] _data;
 
-		delete[] _data;
-
-		_size = rhs.size();
-		_data = new T[rhs.size()];
-		std::copy(rhs.data(), rhs.data() + rhs.size(), _data);
-
+			_size = rhs.size();
+			_data = new T[rhs.size()];
+			std::copy(rhs.data(), rhs.data() + rhs.size(), _data);
+		}
+		
 		return * this;
 	}
 
@@ -89,17 +85,17 @@ int main()
 	}
 
 	{// Test copy
-		memory_block<char> a(1);
-		a.data()[0] = 'a';
+		memory_block<int> a(1);
+		a.data()[0] = 17;
 
 		// Check b is copy of a
-		memory_block<char> b(a);
+		memory_block<int> b(a);
 		myassert(1 == b.size());
 		myassert(a.data()[0] == b.data()[0]);
 
 		// Check changing a doesn't affect b
-		a.data()[0] = 'x';
-		myassert('a' == b.data()[0]);
+		a.data()[0] = 23;
+		myassert(17 == b.data()[0]);
 	}
 
 	{// Test assignment
