@@ -66,7 +66,7 @@ array_string contacts;
 ```
 
 ## Assignment 3
-In this assignment we want to 'templatize' our `memory_block` class. This will free us from constantly converting between `void *`/`char *` and the type we are actually storing inside, will resolve the problem of what `data()`'s return type should be, and will add type safety to our class. Furthermore, it will allow us to store complex, user-defined types and correctly `delete[]` them (invoking their destructors) upon deletion.
+In this assignment we want to 'templatize' our `memory_block` class. This will free us from constantly converting between `void *`/`char *` and the type we are actually storing inside, will resolve the problem of what `data()`'s return type should be, and will add type safety to our class. Furthermore, it will allow us to store complex, user-defined types and correctly `delete[]` them (invoking their destructors upon deletion).
 
 We also want to overload the subscript operator `[]` to make our class more useable. Please add the following definitions to your class and test the new operator:
 
