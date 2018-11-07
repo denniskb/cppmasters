@@ -1,6 +1,6 @@
+#include <algorithm>
 #include <cstddef>
 #include <iostream>
-#include <string>
 
 // Helper macro to check conditions inside our test code
 #define myassert(x)\
@@ -26,7 +26,7 @@ public:
 	memory_block(memory_block const & other) : _size(other.size())
 	{
 		_data = new char[other.size()];
-		std::memcpy(_data, other.data(), other.size());
+		std::copy(other.data(), other.data() + other.size(), _data);
 	}
 
 	/* Frees the allocated memory */
@@ -43,7 +43,7 @@ public:
 
 		_size = rhs.size();
 		_data = new T[rhs.size()];
-		std::memcpy(_data, rhs.data(), rhs.size());
+		std::copy(rhs.data(), rhs.data() + rhs.size(), _data);
 
 		return * this;
 	}
