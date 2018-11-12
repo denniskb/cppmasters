@@ -13,16 +13,16 @@ class memory_block
 {
 public:
 	/* Allocates a memory block of n elements
-	 * @exception Strong exception guarantee: If the allocation (new T[n]) fails,
+	 * @exception Strong exception safety: If the allocation (new T[n]) fails,
 	 * the construction of memory_block is aborted and the application is left in a state
 	 * as if the constructor had never been called in the first place.
 	 *
 	 * b) We can't do any better than this: we could re-try to allocate multiple times
-	 * in the case of failure, but there is not guarantee that 'new T[n]' will EVER succeed. */
+	 * in the case of failure, but there is no guarantee that 'new T[n]' will EVER succeed. */
 	explicit memory_block(std::size_t n) : _size(n), _data(new T[n]) {}
 
 	/* Creates a (deep) copy of other
-	 * @exception Strong exception guarantee: If any of the operations in a constructor fail
+	 * @exception Strong exception safety: If any of the operations in a constructor fail
 	 * the construction of the object is aborted.
 	 *
 	 * b) Using the same arugmentation as in the ctor we can't do any better than this. */
@@ -32,18 +32,18 @@ public:
 	}
 
 	/* Frees the allocated memory
-	 * @exception No-throw guarantee: delete[] never fails.
+	 * @exception No-throw safety: delete[] never fails.
 	 *
-	 * b) No-throw is already the highest conceivable exception guarantee. */
+	 * b) No-throw is already the highest conceivable exception safety. */
 	~memory_block() { delete[] _data; }
 
 	/* Creates a (deep) copy of rhs
-	 * @exception No exception guarantee: 'delete[]' and the assignment '_size = rhs.size()'
+	 * @exception No exception safety: 'delete[]' and the assignment '_size = rhs.size()'
 	 * always succeed. However, if then the allocation fails, the method exits and the
 	 * object is left in an invalid state (_data points to invalid memory, _size contains an
 	 * invalid number of elements).
 	 *
-	 * b) We could provide a basic exception guarantee by immediately setting _data and _size to null/0 after
+	 * b) We could provide a basic exception safety by immediately setting _data and _size to null/0 after
 	 * the delete[]:
 	 * 
 	 * ...
@@ -56,15 +56,14 @@ public:
 	 * The data has been successfully deleted and this is reflected in the _data pointer (null) and the _size (0).
 	 * If then, subsequently, the allocation fails, the method is aborted. We have produced side effects (we have
 	 * deleted our elements), but at least we left our object in a well-defined, valid state, and it
-	 * continues to be usable. Thus we could provide *at most* a basic exception guarantee this way,
-	 * since we are still limited by the exception guarantee of T's copy assignment operator, as before.
+	 * continues to be usable. Thus we could provide a basic exception safety this way.
 	 *
 	 * However, we can do even better (see code). Through a simple re-arrangment of statements we are able
-	 * to provide a strong exception guarantee:
+	 * to provide a strong exception safety:
 	 * 
 	 * 1. We allocate the new memory. If this fails, the method is aborted and our object is left untouched.
 	 * 2. We perform the potentially dangerous std::copy which depends on T's copy constructor's
-	 *    exception guarantee. If this fails, again our object is left untouched -- as if we never invoked operator=().
+	 *    exception safety. If this fails, again our object is left untouched -- as if we never invoked operator=().
 	 * 3. Finally, we safely delete the existing data and reassign the correct data pointer and size.
 	 *
 	 * Note that '_data = tmp' is a simple pointer assignment (a pointer is nothing else than an int variable
@@ -74,13 +73,13 @@ public:
 	 * Please also note that we temporarily potentially more than double our memory consumption,
 	 * because for a short period of time we replicate rhs's data in two different places.
 	 * This is the tradeoff we accept for safer code. For most use cases this tradeoff is
-	 * preferrable (as a high exception guarantee is worth striving for) unless we are dealing
+	 * preferrable (as a high exception safety is worth striving for) unless we are dealing
 	 * with such large arrays (in the gigabyes) that we simply cannot afford to create temporary copies
-	 * of our data but are forced to work 'in-place' (because they simply wouldn't fit into ram).
+	 * of our data but are forced to work 'in-place' (because they simply wouldn't fit into RAM).
 	 *
 	 * Finally and most importantly, observe how we are able to compose a method that offers a strong
-	 * exception guarantee out of methods with lower or no exception guarantees! The exception guarantee
-	 * of a method is not a simple minimum of the methods' it calls, but requries holistic analysis and design. */
+	 * exception safety out of methods with lower or no exception safeties! The exception safety
+	 * of a method is not a simple minimum of that of the methods it calls, but requries holistic analysis and design. */
 	memory_block & operator=(memory_block const & rhs)
 	{
 		if (this != & rhs)
@@ -92,7 +91,7 @@ public:
 			_data = tmp;
 			_size = rhs.size();
 
-			/* OLD CODE -- no exception guarantee
+			/* OLD CODE -- no exception safety
 			 * delete[] _data;
 			 *
 			 * _size = rhs.size();
@@ -100,7 +99,7 @@ public:
 			 * std::copy(rhs.data(), rhs.data() + rhs.size(), _data);
 			 */
 
-			/* OLD CODE with basic exception guarantee only (avoids temporary copies though)
+			/* OLD CODE with basic exception safety only (avoids temporary copies though)
 			 * delete[] _data;                                        // can't fail
 			 * _data = nullptr;                                       // restore valid state
 			 * _size = 0;                                             // restore valid state

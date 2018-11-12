@@ -13,13 +13,13 @@ class memory_block
 {
 public:
 	/* Allocates a memory block of n elements
-	 * @exception Strong exception guarantee: If the allocation (new T[n]) fails,
+	 * @exception Strong exception safety: If the allocation (new T[n]) fails,
 	 * the construction of memory_block is aborted and the application is left in a state
 	 * as if the constructor had never been called in the first place. */
 	explicit memory_block(std::size_t n) : _size(n), _data(new T[n]) {}
 
 	/* Creates a (deep) copy of other
-	 * @exception Strong exception guarantee: If any of the operations in a constructor fail
+	 * @exception Strong exception safety: If any of the operations in a constructor fail
 	 * the construction of the object is aborted. */
 	memory_block(memory_block const & other) : _size(other.size()), _data(new T[other.size()])
 	{
@@ -27,11 +27,11 @@ public:
 	}
 
 	/* Frees the allocated memory
-	 * @exception No-throw guarantee: delete[] never fails. */
+	 * @exception No-throw safety: delete[] never fails. */
 	~memory_block() { delete[] _data; }
 
 	/* Creates a (deep) copy of rhs
-	 * @exception No exception guarantee: 'delete[]' and the assignment '_size = rhs.size()'
+	 * @exception No exception safety: 'delete[]' and the assignment '_size = rhs.size()'
 	 * always succeed. However, if then the allocation fails, the method exits and the
 	 * object is left in an invalid state (_data points to invalid memory, _size contains an
 	 * invalid number of elements). */
