@@ -104,7 +104,7 @@ To summarize:
 <table>
 <tr><th rowspan="2">Exceptions</th><th colspan="2">Assertions</th></tr>
 <tr><th>Runtime Assertions</th><th>Static Assertions</th></tr>
-<tr><td><code>#include <exception></code></td><td><code>#include <cassert></code></td><td>[built-in]</td></tr>
+<tr><td><code>#include &lt;exception&gt;</code></td><td><code>#include &lt;cassert&gt;</code></td><td>[built-in]</td></tr>
 <tr><td><code>try {...} catch(...) {...}</code><br/><code>throw ...;</code></td><td><code>assert(...);</code><br/><code>assert(... && "msg");</code></td><td><code>static_assert(..., "msg")</code></td></tr>
 <tr><td colspan="2" align="center">runtime</td><td>compile time</td></tr>
 <tr><td>release & debug version</td><td>debug version only</td><td>release & debug version</td></tr>
