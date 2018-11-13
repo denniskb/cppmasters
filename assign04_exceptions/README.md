@@ -127,7 +127,7 @@ A high level of exception safety is very desireable as it results in robust and 
 **Further Reading**<br/>
 - [Tutorial on using C++ Exceptions](https://www.tutorialspoint.com/cplusplus/cpp_exceptions_handling.htm)
 - [Overview of Exception Safety (Wikipedia)](https://en.wikipedia.org/wiki/Exception_safety)
-- [Lessons Learned from Specifying Exception-Safety for the C++ Standard Library (whie paper by David Abrahams)](https://www.boost.org/community/exception_safety.html)
+- [Lessons Learned from Specifying Exception-Safety for the C++ Standard Library (white paper by David Abrahams)](https://www.boost.org/community/exception_safety.html)
 
 ## Assignment 4a
 
