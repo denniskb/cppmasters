@@ -113,7 +113,7 @@ To summarize:
 
 ### Levels of Exception Safety
 
-In programming languages we do not only differentiate between operations that are guaranteed to succeed and ones that might fail, we also differentiate different levels of failure, referred to as (levels 0 to 3) of "exception safety". The following hierarchy was formalized by [David Abrahams](https://www.boost.org/community/exception_safety.html) and classifies all potential error conditions according to their severity and recoverability (similarly to how Noam Chomsky classified formal languages into a hierarchy of increasing expressiveness):
+In programming languages we do not only differentiate between operations that are guaranteed to succeed and ones that might fail, we also differentiate between different levels of failure, referred to as (levels 0 to 3 of) "exception safety". The following hierarchy was formalized by [David Abrahams](https://www.boost.org/community/exception_safety.html) and classifies all potential error conditions according to their severity and recoverability (similarly to how Noam Chomsky classified formal languages into a hierarchy of increasing expressiveness):
 
 - **Level 0 "no exception safety"**: No guarantees are made. The operation might succeed or the computer might catch fire. I.e. after the operation the application might be in an undefined/invalid state.
 - **Level 1 "*basic* exception safety"**: If an error occurs the application is left in a well-defined, valid state and all invariants are preserved. However, the operation might have caused side effects so that the application finds itself in a different (though valid) state from before the operation was invoked.
