@@ -20,7 +20,10 @@ public:
 
 	/* Creates a (deep) copy of other
 	 * @exception Strong exception safety: If any of the operations in a constructor fail
-	 * the construction of the object is aborted. */
+	 * the construction of the object is aborted.
+	 * MEMORY LEAK: If std::copy fails the constructor is aborted. However, we've already allocated
+	 * memory in the initializer list which is now lost forever because we no longer have access to _data
+	 * and thus no way of freeing it. To fix this requires C++11 features. */
 	memory_block(memory_block const & other) : _size(other.size()), _data(new T[other.size()])
 	{
 		std::copy(other.data(), other.data() + other.size(), _data);
