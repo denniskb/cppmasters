@@ -87,7 +87,7 @@ public:
 	 *
 	 * MEMORY LEAK: Technically we are not achieving strong exception safety as we are not guaranteeing
 	 * leak freedom. If std::copy fails the method is aborted and we loose access to tmp and thus
-	 * can never free it. The memory is forever leaked (until program termination). We will lean how
+	 * can never free it. The memory is forever leaked (until program termination). We will learn how
 	 * to fix this in the future. */
 	memory_block & operator=(memory_block const & rhs)
 	{
