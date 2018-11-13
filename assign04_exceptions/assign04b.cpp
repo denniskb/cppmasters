@@ -66,7 +66,7 @@ public:
 	 * to provide a strong exception safety:
 	 * 
 	 * 1. We allocate the new memory. If this fails, the method is aborted and our object is left untouched.
-	 * 2. We perform the potentially dangerous std::copy which depends on T's copy constructor's
+	 * 2. We perform the potentially dangerous std::copy which depends on T's copy assignment operator's
 	 *    exception safety. If this fails, again our object is left untouched -- as if we never invoked operator=().
 	 * 3. Finally, we safely delete the existing data and reassign the correct data pointer and size.
 	 *
