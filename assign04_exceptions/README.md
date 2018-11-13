@@ -138,7 +138,7 @@ Perform an exception safety analysis of your `memory_block`'s *constructor*, *co
 - Assignment of primitve data types (ints, pointers, PODs) can never fail (level 3).
 - Freeing of memory (`delete`/`delete[]`/`free()`) and destruction of objects can never fail (level 3).
 - Allocation of memory (`new`/`new[]`/`malloc()`) might fail but leaves no memory leaks behind if it does (level 2).
-- If an exception occurs inside a constructor, the object construction is aborted alltogether. Objects are either fully constructed and initialized or not constructed at all.
+- If an exception occurs inside a constructor, the object construction is aborted alltogether. Objects are either fully constructed and initialized or not constructed at all. However, before the constructor failed, other operations called by the constructor might have already produced side effects.
 - For each operation inside a method, ask yourself: "Can this operation fail?", if the answer is "yes", follow up with "What state is the application left in, if it does?". This is how you determine exception safety.
 - What is the exception safety of `std::copy`?
 - Traditionally, basic exception safety (level 1) includes leak freedom (referring to resources such as memory, file handles, etc.) as one of its requirements. We are going to ignore this to simplify the assignment. Trying to incorporate leak freedom into our analysis would require knowledge of advanced C++11 features which are subject of later assignments. For now, if an operation adheres to the definition provided above, it can be considered level 1, even if it leaks memory.
