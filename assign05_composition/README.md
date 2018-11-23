@@ -42,11 +42,6 @@ Please implement the following interface:
 ```
 #include "myarray.h"
 
-#include <algorithm>
-#include <cmath>
-#include <cstddef>
-
-
 
 namespace my {
 
