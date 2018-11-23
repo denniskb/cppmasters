@@ -1,4 +1,4 @@
-# C++ Master Class Assignment 5: My first Vector
+# C++ Master Class Assignment 5: Composition
 
 ## Introduction
 
