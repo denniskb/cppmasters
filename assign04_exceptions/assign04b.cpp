@@ -24,8 +24,12 @@ public:
 	/* Creates a (deep) copy of other
 	 * @exception Strong exception safety: If any of the operations in a constructor fail
 	 * the construction of the object is aborted.
+	 * MEMORY LEAK: If std::copy fails the constructor is aborted. However, we've already allocated
+	 * memory in the initializer list which is now lost forever because we no longer have access to _data
+	 * and thus no way of freeing it. To fix this requires C++11 features.
 	 *
-	 * b) Using the same arugmentation as in the ctor we can't do any better than this. */
+	 * b) Using the same arugmentation as in the ctor we can't do any better than this.
+	 * (We will be able to resolve the memory leak in the future.) */
 	memory_block(memory_block const & other) : _size(other.size()), _data(new T[other.size()])
 	{
 		std::copy(other.data(), other.data() + other.size(), _data);
@@ -62,7 +66,7 @@ public:
 	 * to provide a strong exception safety:
 	 * 
 	 * 1. We allocate the new memory. If this fails, the method is aborted and our object is left untouched.
-	 * 2. We perform the potentially dangerous std::copy which depends on T's copy constructor's
+	 * 2. We perform the potentially dangerous std::copy which depends on T's copy assignment operator's
 	 *    exception safety. If this fails, again our object is left untouched -- as if we never invoked operator=().
 	 * 3. Finally, we safely delete the existing data and reassign the correct data pointer and size.
 	 *
@@ -79,13 +83,18 @@ public:
 	 *
 	 * Finally and most importantly, observe how we are able to compose a method that offers a strong
 	 * exception safety out of methods with lower or no exception safeties! The exception safety
-	 * of a method is not a simple minimum of that of the methods it calls, but requries holistic analysis and design. */
+	 * of a method is not a simple minimum of that of the methods it calls, but requries holistic analysis and design.
+	 *
+	 * MEMORY LEAK: Technically we are not achieving strong exception safety as we are not guaranteeing
+	 * leak freedom. If std::copy fails the method is aborted and we loose access to tmp and thus
+	 * can never free it. The memory is forever leaked (until program termination). We will learn how
+	 * to fix this in the future. */
 	memory_block & operator=(memory_block const & rhs)
 	{
 		if (this != & rhs)
 		{
 			T * tmp = new T[rhs.size()];
-			std::copy(rhs.data(), rhs.data() + rhs.size(), tmp);
+			std::copy(rhs.data(), rhs.data() + rhs.size(), tmp); // might fail => memory leak (tmp)
 
 			delete[] _data;
 			_data = tmp;
@@ -99,7 +108,7 @@ public:
 			 * std::copy(rhs.data(), rhs.data() + rhs.size(), _data);
 			 */
 
-			/* OLD CODE with basic exception safety only (avoids temporary copies though)
+			/* OLD CODE with basic exception safety only (avoids temporary copies/leaks though)
 			 * delete[] _data;                                        // can't fail
 			 * _data = nullptr;                                       // restore valid state
 			 * _size = 0;                                             // restore valid state

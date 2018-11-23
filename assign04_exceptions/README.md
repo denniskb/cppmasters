@@ -4,7 +4,7 @@
 
 ### Error Handling Mechanisms
 
-C++ offers two mechanisms to handle errors inside your application: exceptions and assertions. Exceptions are used to signal *exceptional* circumstances that resulted in a program error, while assertions are used to enforce preconditions and invariants. Some operations are guaranteed to always succeed, like assigning Plain Old Data (POD) types to each other (primitive types (char, int, float, bool, ...) and aggregates thereof), destroying an object, or deallocating memory. Some operations may fail and raise an exception as a result, these are mostly operations involving resources like allocating memory, spawning threads, or opening network connections. The programmer can choose to handle exceptions by catching them, ignore exceptions in which case they are propagated up the call stack until they are either caught or cause program termination, or she can even raise their own exceptions if an unrecoverable error occurs in her own code.
+C++ offers two mechanisms to handle errors inside your application: exceptions and assertions. Exceptions are used to signal *exceptional* circumstances that resulted in a program error, while assertions are used to enforce preconditions and invariants. Some operations are guaranteed to always succeed, like assigning Plain Old Data (POD) types to each other (primitive types (char, int, float, bool, ...) and aggregates thereof), destroying an object, or deallocating memory. Some operations may fail and raise an exception as a result, these are mostly operations involving resources like allocating memory, spawning threads, or opening network connections. The programmer can choose to handle exceptions by catching them, ignore exceptions in which case they are propagated up the call stack until they are either caught or cause program termination, or she can even raise her own exceptions if an unrecoverable error occurs in her own code.
 
 Let's have a look at some examples. Since memory (RAM) is a limited resource, allocations such as `new int[N]` might fail if there isn't enough available memory in the system. You can blindly allocate memory and hope that everything goes well (or that the caller of your code takes care of error handling) or you can catch and handle errors yourself:
 
@@ -104,7 +104,7 @@ To summarize:
 <table>
 <tr><th rowspan="2">Exceptions</th><th colspan="2">Assertions</th></tr>
 <tr><th>Runtime Assertions</th><th>Static Assertions</th></tr>
-<tr><td><code>#include <exception></code></td><td><code>#include <cassert></code></td><td>[built-in]</td></tr>
+<tr><td><code>#include &lt;exception&gt;</code></td><td><code>#include &lt;cassert&gt;</code></td><td>[built-in]</td></tr>
 <tr><td><code>try {...} catch(...) {...}</code><br/><code>throw ...;</code></td><td><code>assert(...);</code><br/><code>assert(... && "msg");</code></td><td><code>static_assert(..., "msg")</code></td></tr>
 <tr><td colspan="2" align="center">runtime</td><td>compile time</td></tr>
 <tr><td>release & debug version</td><td>debug version only</td><td>release & debug version</td></tr>
@@ -113,21 +113,21 @@ To summarize:
 
 ### Levels of Exception Safety
 
-In programming languages we do not only differentiate between operations that are guaranteed to succeed and ones that might fail, we also differentiate different levels of failure, referred to as (levels 0 to 3) of "exception safety". The following hierarchy was formalized by [David Abrahams](https://www.boost.org/community/exception_safety.html) and classifies all potential error conditions according to their severity and recoverability (similarly to how Noam Chomsky classified formal languages into a hierarchy of increasing expressiveness):
+In programming languages we do not only differentiate between operations that are guaranteed to succeed and ones that might fail, we also differentiate between different levels of failure, referred to as (levels 0 to 3 of) "exception safety". The following hierarchy was formalized by [David Abrahams](https://www.boost.org/community/exception_safety.html) and classifies all potential error conditions according to their severity and recoverability (similarly to how Noam Chomsky classified formal languages into a hierarchy of increasing expressiveness):
 
 - **Level 0 "no exception safety"**: No guarantees are made. The operation might succeed or the computer might catch fire. I.e. after the operation the application might be in an undefined/invalid state.
-- **Level 1 "*basic* exception safety"**: If an error occurs the application is left in a well-defined, valid state and all invariants are preserved. However, the operation might have caused side effects so that the application finds itself in a different (though valid) state from before the operation was invoked.
+- **Level 1 "*basic* exception safety"**: If an error occurs the application is left in a well-defined, valid state and all invariants are preserved. However, the operation might have caused side effects so that the application finds itself in a different (though valid) state from the one before the operation was invoked.
 - **Level 2 "*strong* exception safety"**: Like level 1, but additionally no side effects are produced. I.e. if an operation that offers a strong exception safety fails, the application's state remains unmodified, as if the operation had never been invoked in the first place.
 - **Level 3 "*no-throw" exception safety"**: The operation is guaranteed to succeed. If an error occurs it will be handled internally and not be observable by clients (either directly (return value/program execution) or indirectly (side effects)).
 
-Built-in functions and classes offer different levels of exception safety. For example destruction, de-allocation, POD assignment are no-throw. Arithmetic division offers no safety guarantees (since one might divide by 0). The exception safety level of all built-in and library functions is well documented in all popular [API references](http://www.cplusplus.com/). The exception safety level of custom code has to be determined through careful, holistic analysis -- it is not a simple minimum of the exception safeties of invoked functions for example. Futhermore, when analyzing functions according to their exception safety we confine ourselves to the scope of the C++ language and its runtime. Otherwise any analysis would be worthless as one could argue that any function can fail due to an imminent meteor impact. I.e. we do not consider outside forces during the analysis (operating system, hardware failures, etc.).
+Built-in functions and classes offer different levels of exception safety. For example destruction, de-allocation, POD assignment are no-throw. Arithmetic division offers no safety guarantees (since one might divide by 0). The exception safety level of all built-in and library functions is well documented in all popular [API references](https://en.cppreference.com/w/). The exception safety level of custom code has to be determined through careful, holistic analysis -- it is not a simple minimum of the exception safeties of invoked functions for example. Futhermore, when analyzing functions according to their exception safety we confine ourselves to the scope of the C++ language and its runtime. Otherwise any analysis would be worthless as one could argue that any function can fail due to an imminent meteor impact. I.e. we do not consider outside forces during the analysis (operating system, hardware failures, etc.).
 
 A high level of exception safety is very desireable as it results in robust and dependable code that is crucial to implement critical applications such as planetary scale databases or space ship flight controllers. The higher up we go the hierarchy the more difficult (if not impossible) and *costly* it becomes to offer a certain level of exception safety.
 
 **Further Reading**<br/>
 - [Tutorial on using C++ Exceptions](https://www.tutorialspoint.com/cplusplus/cpp_exceptions_handling.htm)
 - [Overview of Exception Safety (Wikipedia)](https://en.wikipedia.org/wiki/Exception_safety)
-- [Lessons Learned from Specifying Exception-Safety for the C++ Standard Library (whie paper by David Abrahams)](https://www.boost.org/community/exception_safety.html)
+- [Lessons Learned from Specifying Exception-Safety for the C++ Standard Library (white paper by David Abrahams)](https://www.boost.org/community/exception_safety.html)
 
 ## Assignment 4a
 
