@@ -56,10 +56,11 @@ public:
 	{
 		if (this != & rhs)
 		{
-			T * tmp = new T[rhs.size()];
-			std::copy(rhs.data(), rhs.data() + rhs.size(), tmp);
+			std::unique_ptr<T> tmp(new T[rhs.size()]);
+			std::copy(rhs.data(), rhs.data() + rhs.size(), tmp.get());
 
-			_data.reset(tmp);	// in one step: delete[] _data; _data = tmp;
+			_data.swap(tmp);	// swap internals of _data/tmp. As tmp goes out of scope
+						// it destroys our old data
 			_size = rhs.size();
 		}
 		
