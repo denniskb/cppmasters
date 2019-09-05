@@ -33,7 +33,7 @@ public:
 	int size() const
 	{
 		// TODO
-		return result;
+		return 0;
 	}
 
 	// Append element at the end of list
