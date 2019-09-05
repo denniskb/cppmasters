@@ -21,8 +21,8 @@ collection or whether they are automatically re-ordered according to some predic
 <th>ordered</th>
 <td>
 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a></td><td><a href="https://docs.oracle.com/
-javase/8/docs/api/java/util/SortedSet.html">sorted Set</a>,
-<a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html">sorted Map</a>
+javase/8/docs/api/java/util/SortedSet.html">Sorted Set</a>,
+<a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html">Sorted Map</a>
 </td>
 </tr>
 <tr>
@@ -32,8 +32,8 @@ javase/8/docs/api/java/util/SortedSet.html">sorted Set</a>,
 Multi Map
 </td>
 <td>
-<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Sset .html">set</a>,
-<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map. html" >Map</a>
+<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html">Set</a>,
+<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html">Map</a>
 </td>
 </tr>
 </table>
@@ -58,7 +58,7 @@ The C++ standard library allows you to choose from a variety of implementations 
 Containers that implement the same collection will expose the same interface and exhibit the same behavior. They merely
 differ in how they implement said interface and thus, in the time complexity they guarantee.
 
-The family of ~std::unordered_*~ containers are named very poorly. Here, ‘unordered’ has nothing to do with unordered
+The family of `std::unordered_*` containers are named very poorly. Here, ‘unordered’ has nothing to do with unordered
 collections as discussed above. In the C++ std library ‘unordered’ signifies that the container internally uses a [hash](https://en.wikipedia.org/wiki/Hash_table) (as opposed to a [tree](https://en.wikipedia.org/wiki/Self-balancing_binary_search_tree)).
 
 In practice, you want to first select a collection that *semantically* suits the needs of your application. For example you
@@ -70,8 +70,7 @@ consumption, time complexity, validity of iterators, etc.
 Describe the trade-offs between the various implementations of List and Set. (Solution follows in white, highlight text to
 view ONLY after solving both 7a and 7b first!)
 
-<div style="color: #eee">
-<ul>
+<ul style="color:#eee">
 <li><p>Linked lists offer constant time manipulation (insertion/deletion of elements), promising to outperform vector
 (arrays) for scenarios with many insertion/deletion operations relative to read operations. Vectors on the other hand
 require to shift half the array by one slot. However, each manipulation requires a <code>new</code> or <code>delete</code>
@@ -87,7 +86,6 @@ such as ‘queue’ would be better suited.</p>
 virtually never hit. Tree sets suffer from the same disadvantages of linked lists requiring the allocation of a separate
 node for each element. Similarly they don't invalidate iterators.</li>
 </ul>
-</div>
 
 ## Assignment 7b
 
