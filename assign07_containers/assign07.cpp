@@ -42,20 +42,20 @@ public:
 		// TODO
 	}
 
-	// Insert element 'x' at specific posiiton 'i' (i = 0 means insert at the front)
+	// Insert element 'x' at specific posiiton 'i' (i = 0 means insert before the first element)
 	void insert(int i, int x)
 	{
 		// TODO
 	}
 
-	// Return element at specific position 'i' (i = 0 means return from the front)
+	// Return element at specific position 'i' (i = 0 means return the first element)
 	int at(int i)
 	{
 		// TODO
 		return 0;
 	}
 
-	// Delete element at specific position 'i' (i = 0 means delete very first element)
+	// Delete element at specific position 'i' (i = 0 means delete first element)
 	void remove(int i)
 	{
 		// TODO
