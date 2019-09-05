@@ -42,13 +42,7 @@ public:
 	// Append element at the end of list
 	void append(int x)
 	{
-		node * n = new node;
-		n->value = x;
-
-		node * tail = _head;
-		while (tail->next != nullptr) tail = tail->next;
-
-		tail->next = n;
+		insert(size(), x);
 	}
 
 	// Insert element 'x' at specific posiiton 'i' (i = 0 means insert at the front)
