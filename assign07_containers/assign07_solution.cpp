@@ -116,7 +116,7 @@ int main()
 	}
 
 	// Benchmark (run in RELEASE mode!!!)
-	int const ITER = 20'000; // might need to adjust slightly for your machine
+	int const ITER = 10'000; // might need to adjust slightly for your machine
 
 	{// Append (at the end)
 		std::vector<int> v;
