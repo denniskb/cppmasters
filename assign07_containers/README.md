@@ -67,10 +67,35 @@ courses inside a Multi Map. Afterwards, you choose an implementation of said col
 consumption, time complexity, validity of iterators, etc.
 
 ## Assignment 7a
-Describe the trade-offs between the various implementations of List and Set. (Solution follows in white, highlight text to
-view ONLY after solving both 7a and 7b first!)
+Describe the trade-offs between the various implementations of List and Set. (Solution at the end of this file, don't scroll there before solving both 7a and 7b first!)
 
-<ul style="color:#eee">
+## Assignment 7b
+
+Implement the linked list interface in assign7b.cpp, run the benchmarks, and interpret the results.
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+## 7a Solution
+<ul>
 <li><p>Linked lists offer constant time manipulation (insertion/deletion of elements), promising to outperform vector
 (arrays) for scenarios with many insertion/deletion operations relative to read operations. Vectors on the other hand
 require to shift half the array by one slot. However, each manipulation requires a <code>new</code> or <code>delete</code>
@@ -86,7 +111,3 @@ such as ‘queue’ would be better suited.</p>
 virtually never hit. Tree sets suffer from the same disadvantages of linked lists requiring the allocation of a separate
 node for each element. Similarly they don't invalidate iterators.</li>
 </ul>
-
-## Assignment 7b
-
-Implement the linked list interface in assign7b.cpp, run the benchmarks, and interpret the results.
