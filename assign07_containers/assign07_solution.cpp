@@ -157,12 +157,12 @@ int main()
 		for (int i = 0; i < ITER; i++)
 			v.insert(v.begin() + v.size() / 2, i);
 		auto t2 = c.now();
-		std::cout << "tPrepend (vector): " << std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() << "ms" << std::endl;
+		std::cout << "tInser (vector): " << std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() << "ms" << std::endl;
 
 		t1 = c.now();
 		for (int i = 0; i < ITER; i++)
 			l.insert(i / 2, i);
 		t2 = c.now();
-		std::cout << "tPrepend (list): " << std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() << "ms" << std::endl;
+		std::cout << "tInser (list): " << std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() << "ms" << std::endl;
 	}
 }
