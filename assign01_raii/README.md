@@ -10,6 +10,9 @@ These are some incredible strong guarantees that allow one to write bullet-proof
 
 Thus, the first lessons, we will focus on RAII, on the automatic management of resources (not only memory, but network connections, threads, etc.). We will start with memory and write building blocks for all data structures of the standard library and implement some of them.
 
+### Additional Reading
+[CppCon 2019: Arthur O'Dwyer "Back to Basics: RAII and the Rule of Zero"](https://www.youtube.com/watch?v=7Qgd9B1KuMQ)
+
 ## Assignment 1
 C++ allows us to allocate and free memory via "new" and "delete". The problem is that these commands have to be called manually and explicitly. We would like to design a very thin wrapper around new and delete that automatically allocates memory upon its declaration and automatically frees it upon its deletion (when it goes out of scope). I.e., for starters, we are looking to build a "dumb" memory_block class that doesn't know anything about types or destructors, but merely automates memory (de)allocation, relieving the programmer from having (to remember to) manually call "delete". In the first iteration of the assignment the interface should look roughly like this (we will refine it in future iterations):
 
